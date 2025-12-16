@@ -16,10 +16,17 @@ public class SwingMainMenuController extends MainMenuController{
   public SwingMainMenuController(SwingMainMenuModel mainMenuModel, SwingMainMenuView mainMenuView){
     this.mainMenuModel = mainMenuModel;
     this.mainMenuView = mainMenuView;
-    mainMenuView.setVisible(true);
+
+    addActionListeners();
+  }
+
+  private void addActionListeners() {
+    mainMenuView.getQuitItem().addActionListener(e ->{
+      System.exit(0);
+    });
   }
 
   public void display(){
-    mainMenuView.display();
+    mainMenuView.setVisible(true);;
   }
 }
