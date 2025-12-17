@@ -5,53 +5,35 @@ package controller;
 import java.util.Iterator;
 import javax.swing.JButton;
 
-import model.SwingLogMenuModel;
-import model.SwingMainMenuModel;
-import view.SwingLogMenuView;
+import model.SwingMenuModel;
 import view.SwingMainMenuView;
+import view.SwingMenuView;
+
 
 /**
  * SwingMainMenuController
  */
-public class SwingMainMenuController extends MainMenuController{
-  
-  private SwingMainMenuModel mainMenuModel;
-  private SwingMainMenuView mainMenuView;
-  
-  public SwingMainMenuController(SwingMainMenuModel mainMenuModel, SwingMainMenuView mainMenuView){
-    this.mainMenuModel = mainMenuModel;
-    this.mainMenuView = mainMenuView;
+public class SwingMainMenuController extends SwingMenuController {
+    public SwingMainMenuController(SwingMenuModel swingMenuModel, SwingMenuView swingMenuView, SwingMainController swingMainController) {
+        super(swingMenuModel, swingMenuView, swingMainController);;
 
-    SwingLogMenuView swingLogMenuView = new SwingLogMenuView();
-    SwingLogMenuModel swingLogMenuModel = new SwingLogMenuModel();
-
-    SwingLogMenuController swingLogMenuController = new SwingLogMenuController(swingLogMenuModel, swingLogMenuView, this);
-    this.mainMenuView.addCustomPanel(swingLogMenuView, "LOG");
-
-    addActionListeners();
-  }
-
-  /**
-   * Add action to panel buttons
-   */
-  private void addActionListeners() {
-    mainMenuView.getQuitItem().addActionListener(e ->{
-      System.exit(0);
-    });
-
-    Iterator<JButton> addButtonIter = mainMenuView.getAddButtons().iterator();
-    while (addButtonIter.hasNext()){
-      addButtonIter.next().addActionListener(e -> {
-        mainMenuView.showPanel("LOG"); 
-      });
+        swingMainController.addPanel("MENU", swingMenuView, swingMenuView.getMenuBar());
     }
-  }
 
-  public SwingMainMenuView getMainMenuView() {
-    return mainMenuView;
-  }
+    @Override
+    protected void addActionListeners() {
+        super.addActionListeners();
+        SwingMainMenuView swingMainMenuView = (SwingMainMenuView) this.swingMenuView;
 
-  public void display(){
-    mainMenuView.setVisible(true);;
-  }
+        swingMainMenuView.getAddAnimeItem().addActionListener(e -> {
+            this.swingMainController.switchPanel("ADD");
+        });
+
+        Iterator<JButton> addButtonIter = swingMainMenuView.getAddButtons().iterator();
+        while (addButtonIter.hasNext()) {
+            addButtonIter.next().addActionListener(e -> {
+                this.swingMainController.switchPanel("LOG");
+            });
+        }
+    }
 }

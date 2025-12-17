@@ -5,30 +5,29 @@ package controller;
 import model.SwingLogMenuModel;
 import model.SwingMainMenuModel;
 import view.SwingLogMenuView;
+import view.SwingMainView;
 
 /**
  * SwingLogMenuController
  */
-public class SwingLogMenuController {
+public class SwingLogMenuController extends SwingMenuController {
+    public SwingLogMenuController(SwingLogMenuModel swingLogMenuModel, SwingLogMenuView swingLogMenuView, SwingMainController swingMainController) {
+        super(swingLogMenuModel, swingLogMenuView, swingMainController);
 
-  private SwingLogMenuModel swingLogMenuModel;
-  private SwingLogMenuView swingLogMenuView;
-  private SwingMainMenuController swingMainMenuController;
+        swingMainController.addPanel("LOG", swingMenuView, swingMenuView.getMenuBar());
+    }
 
-  public SwingLogMenuController(SwingLogMenuModel swingLogMenuModel, SwingLogMenuView swingLogMenuView, SwingMainMenuController swingMainMenuController){
-    this.swingLogMenuView = swingLogMenuView;
-    this.swingLogMenuModel = swingLogMenuModel;
-    this.swingMainMenuController = swingMainMenuController;
+    @Override
+    protected void addActionListeners() {
+        super.addActionListeners();
 
-    addActionListeners();
-  }
-  private void addActionListeners(){
-    swingLogMenuView.getReturnButton().addActionListener(e -> {
-      swingMainMenuController.getMainMenuView().showPanel("MENU");
-    });
+        SwingLogMenuView swingLogMenuView = (SwingLogMenuView) swingMenuView;
+        swingLogMenuView.getCommitItem().addActionListener(e -> {
+           this.swingMainController.switchPanel("MENU");
+        });
 
-    swingLogMenuView.getCommitButton().addActionListener(e -> {
-      swingMainMenuController.getMainMenuView().showPanel("MENU");
-    });
-  }
+        swingLogMenuView.getCancelItem().addActionListener(e -> {
+            this.swingMainController.switchPanel("MENU");
+        });
+    }
 }

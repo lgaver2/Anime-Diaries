@@ -1,52 +1,40 @@
-// SPDX-License-Identifier: MIT
-
 package view;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
-/**
- * SwingLogMenuView
- */
-public class SwingLogMenuView extends SwingMenuView {
+public class SwingAddMenuView extends SwingMenuView {
     private JMenuItem commitItem;
     private JMenuItem cancelItem;
 
-    public SwingLogMenuView() {
+    public SwingAddMenuView() {
         super();
-        // create inner Pannel
+
         JPanel innerPanel = new JPanel(new GridLayout(4, 1, 5, 0));
         innerPanel.setOpaque(false);
         innerPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
 
-        JLabel scoreLabel = new JLabel("Your score");
-        JLabel comment = new JLabel("comment for this episode");
+        JLabel titleLabel = new JLabel("Anime Title");
+        JLabel episodesLabel = new JLabel("Number of episodes");
 
         // create text area
         JTextArea scoreArea = new JTextArea();
-        JTextArea textArea = new JTextArea();
-        JScrollPane scroll = new JScrollPane(textArea);
+        JTextArea episodesArea = new JTextArea();
 
-        innerPanel.add(scoreLabel);
+        innerPanel.add(titleLabel);
         innerPanel.add(scoreArea);
-        innerPanel.add(comment);
-        innerPanel.add(scroll);
+        innerPanel.add(episodesLabel);
+        innerPanel.add(episodesArea);
 
         add(innerPanel, BorderLayout.CENTER);
 
-        //JPanel buttonPanel = new JPanel();
-        //returnButton = new JButton("Return");
-        //commitButton = new JButton("Commit");
-        //buttonPanel.add(returnButton);
-        //buttonPanel.add(commitButton);
-        //add(buttonPanel, BorderLayout.SOUTH);
-
         // footer
-        JLabel foot = new JLabel("Log Mode");
+        JLabel foot = new JLabel("Add Mode");
         foot.setHorizontalAlignment(SwingConstants.CENTER);
         foot.setBackground(Color.LIGHT_GRAY);
         add(foot, BorderLayout.SOUTH);
+
 
         commitItem = new JMenuItem("Commit");
         cancelItem = new JMenuItem("Cancel");
@@ -61,13 +49,5 @@ public class SwingLogMenuView extends SwingMenuView {
         menuFile.add(quitItem);
         menuBar.add(menuFile);
         return menuBar;
-    }
-
-    public JMenuItem getCancelItem() {
-        return cancelItem;
-    }
-
-    public JMenuItem getCommitItem() {
-        return commitItem;
     }
 }

@@ -5,7 +5,7 @@ package model;
 /**
  * SwingLogMenuModel
  */
-public class SwingLogMenuModel {
+public class SwingLogMenuModel extends SwingMenuModel{
 
-  
+
 }

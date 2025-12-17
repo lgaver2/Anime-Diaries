@@ -5,9 +5,9 @@ package model;
 /**
  * SwingMainMenuModel
  */
-public class SwingMainMenuModel extends MainMenuModel{
+public class SwingMainMenuModel extends SwingMenuModel {
 
-  public SwingMainMenuModel(){
+    public SwingMainMenuModel() {
 
-  }
+    }
 }
