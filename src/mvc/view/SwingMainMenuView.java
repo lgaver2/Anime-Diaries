@@ -5,6 +5,7 @@ package view;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.LinkedList;
 
 /**
  * SwingMainMenuView
@@ -16,6 +17,8 @@ public class SwingMainMenuView extends JFrame implements MainMenuView{
 
   private JMenuItem quitItem;
 
+  private LinkedList<JButton> addButtons;
+
   public SwingMainMenuView(){
     //display settings
     setTitle("Anime Diary");
@@ -25,7 +28,7 @@ public class SwingMainMenuView extends JFrame implements MainMenuView{
 
     cardLayout = new CardLayout();
     mainPanel = new JPanel(cardLayout);
-    mainPanel.setLayout(new BorderLayout());
+    JPanel menuView = new JPanel(new BorderLayout());
     
     //layout for the mainPanel
     //create the menu bar
@@ -42,6 +45,8 @@ public class SwingMainMenuView extends JFrame implements MainMenuView{
     JPanel contentPanel = new JPanel();
     contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 
+    addButtons = new LinkedList<>();
+
     for (int i = 1; i <= 15; i++) {
         JPanel ligne = createLine("Title " + i, i, i+2);
         contentPanel.add(ligne);
@@ -52,17 +57,19 @@ public class SwingMainMenuView extends JFrame implements MainMenuView{
     //create the footer
     JScrollPane scrollPane = new JScrollPane(contentPanel);
     scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-    mainPanel.add(scrollPane, BorderLayout.CENTER);
+    menuView.add(scrollPane, BorderLayout.CENTER);
     
     JLabel foot = new JLabel("Main Menu");
     foot.setHorizontalAlignment(SwingConstants.CENTER);
     foot.setBackground(Color.LIGHT_GRAY);
-    mainPanel.add(foot, BorderLayout.SOUTH);
+    menuView.add(foot, BorderLayout.SOUTH);
+    
+    mainPanel.add(menuView, "MENU");
 
     this.add(mainPanel);
   }
 
-  public void addPanel(JPanel panel, String panelName){
+  public void addCustomPanel(JPanel panel, String panelName){
     mainPanel.add(panel, panelName);
   }
 
@@ -78,7 +85,7 @@ public class SwingMainMenuView extends JFrame implements MainMenuView{
    * @return a JPanel with these informations plus two buttons (to view logs and 
    * add a new entry)
    */
-  private static JPanel createLine(String title, int score, int progress) {
+  private JPanel createLine(String title, int score, int progress) {
     JPanel row = new JPanel(new BorderLayout());
     row.setBackground(Color.WHITE);
     row.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -109,6 +116,7 @@ public class SwingMainMenuView extends JFrame implements MainMenuView{
     btn2.setFont(new Font("Arial", Font.PLAIN, 10));
 
     buttonsPanel.add(btn1);
+    addButtons.add(btn1);
     buttonsPanel.add(btn2);
 
     row.add(buttonsPanel, BorderLayout.EAST);
@@ -116,8 +124,20 @@ public class SwingMainMenuView extends JFrame implements MainMenuView{
     return row;
   }
 
+  public JPanel getMainPanel(){
+    return mainPanel;
+  }
+
+  public CardLayout getCardLayout(){
+    return cardLayout;
+  }
+
   public JMenuItem getQuitItem(){
     return this.quitItem;
+  } 
+
+  public LinkedList<JButton> getAddButtons(){
+    return this.addButtons;
   }
 
 
