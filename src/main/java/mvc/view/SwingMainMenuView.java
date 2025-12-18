@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-package view;
+package mvc.view;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;

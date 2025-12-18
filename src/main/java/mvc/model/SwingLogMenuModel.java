@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-package model;
+package mvc.model;
 
 /**
  * SwingLogMenuModel

@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 
-package controller;
+package mvc.controller;
 
-import model.SwingMenuModel;
-import view.SwingMainView;
-import view.SwingMenuView;
+import mvc.model.SwingMenuModel;
+import mvc.view.SwingMainView;
+import mvc.view.SwingMenuView;
 
 /**
  * MainMenuController

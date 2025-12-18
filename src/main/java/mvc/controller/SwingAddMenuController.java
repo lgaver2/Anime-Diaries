@@ -1,8 +1,8 @@
-package controller;
+package mvc.controller;
 
-import model.SwingMenuModel;
-import view.SwingAddMenuView;
-import view.SwingMenuView;
+import mvc.model.SwingMenuModel;
+import mvc.view.SwingAddMenuView;
+import mvc.view.SwingMenuView;
 
 public class SwingAddMenuController extends SwingMenuController {
     public SwingAddMenuController(SwingMenuModel swingMenuModel, SwingMenuView swingMenuView, SwingMainController swingMainController) {

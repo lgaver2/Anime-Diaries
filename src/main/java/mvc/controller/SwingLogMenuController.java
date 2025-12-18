@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 
-package controller;
+package mvc.controller;
 
-import model.SwingLogMenuModel;
-import model.SwingMainMenuModel;
-import view.SwingLogMenuView;
-import view.SwingMainView;
+import mvc.model.SwingLogMenuModel;
+import mvc.model.SwingMainMenuModel;
+import mvc.view.SwingLogMenuView;
+import mvc.view.SwingMainView;
 
 /**
  * SwingLogMenuController

@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
 
-import controller.SwingMainController;
-import controller.SwingMainMenuController;
-import model.SwingMainMenuModel;
-import model.SwingMainModel;
-import view.SwingMainMenuView;
-import view.SwingMainView;
+import mvc.controller.SwingMainController;
+import mvc.model.SwingMainMenuModel;
+import mvc.model.SwingMainModel;
+import mvc.view.SwingMainMenuView;
+import mvc.view.SwingMainView;
 
 public class Main {
 

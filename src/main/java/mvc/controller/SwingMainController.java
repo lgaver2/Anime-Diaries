@@ -1,13 +1,13 @@
-package controller;
+package mvc.controller;
 
-import model.SwingAddMenuModel;
-import model.SwingLogMenuModel;
-import model.SwingMainMenuModel;
-import model.SwingMainModel;
-import view.SwingAddMenuView;
-import view.SwingLogMenuView;
-import view.SwingMainMenuView;
-import view.SwingMainView;
+import mvc.model.SwingAddMenuModel;
+import mvc.model.SwingLogMenuModel;
+import mvc.model.SwingMainMenuModel;
+import mvc.model.SwingMainModel;
+import mvc.view.SwingAddMenuView;
+import mvc.view.SwingLogMenuView;
+import mvc.view.SwingMainMenuView;
+import mvc.view.SwingMainView;
 
 import javax.swing.*;
 

@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT 
 
-package controller;
+package mvc.controller;
 
 import java.util.Iterator;
 import javax.swing.JButton;
 
-import model.SwingMenuModel;
-import view.SwingMainMenuView;
-import view.SwingMenuView;
+import mvc.model.SwingMenuModel;
+import mvc.view.SwingMainMenuView;
+import mvc.view.SwingMenuView;
 
 
 /**

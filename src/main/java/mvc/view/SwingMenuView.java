@@ -1,6 +1,6 @@
-package view;
+package mvc.view;
 
-import controller.SwingMenuController;
+import mvc.controller.SwingMenuController;
 
 import javax.swing.*;
 import java.awt.*;
