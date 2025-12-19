@@ -8,6 +8,8 @@ public class SwingAddMenuView extends SwingMenuView {
     private JMenuItem commitItem;
     private JMenuItem cancelItem;
     private JButton addButton;
+    JTextArea titleArea;
+    JTextArea episodesArea;
 
     public SwingAddMenuView() {
         super();
@@ -20,11 +22,11 @@ public class SwingAddMenuView extends SwingMenuView {
         JLabel episodesLabel = new JLabel("Number of episodes");
 
         // create text area
-        JTextArea scoreArea = new JTextArea(1, 20);
-        JTextArea episodesArea = new JTextArea(1, 20);
+        titleArea = new JTextArea(1, 20);
+        episodesArea = new JTextArea(1, 20);
 
         innerPanel.add(titleLabel);
-        innerPanel.add(scoreArea);
+        innerPanel.add(titleArea);
         innerPanel.add(episodesLabel);
         innerPanel.add(episodesArea);
 
@@ -54,5 +56,25 @@ public class SwingAddMenuView extends SwingMenuView {
         menuFile.add(quitItem);
         menuBar.add(menuFile);
         return menuBar;
+    }
+
+    public JMenuItem getCommitItem() {
+        return commitItem;
+    }
+
+    public JMenuItem getCancelItem() {
+        return cancelItem;
+    }
+
+    public JButton getAddButton() {
+        return addButton;
+    }
+
+    public String getTitle() {
+        return titleArea.getText();
+    }
+
+    public String getEpisodes() {
+        return episodesArea.getText();
     }
 }

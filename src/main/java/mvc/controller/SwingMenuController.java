@@ -5,6 +5,7 @@ package mvc.controller;
 import mvc.model.SwingMenuModel;
 import mvc.view.SwingMainView;
 import mvc.view.SwingMenuView;
+import repository.DataLoader;
 
 /**
  * MainMenuController
@@ -17,8 +18,6 @@ public abstract class SwingMenuController {
         this.swingMenuModel = swingMenuModel;
         this.swingMenuView = swingMenuView;
         this.swingMainController = swingMainController;
-
-        addActionListeners();
     }
 
     protected void addActionListeners(){

@@ -6,6 +6,7 @@ import mvc.model.SwingLogMenuModel;
 import mvc.model.SwingMainMenuModel;
 import mvc.view.SwingLogMenuView;
 import mvc.view.SwingMainView;
+import repository.DataLoader;
 
 /**
  * SwingLogMenuController
@@ -15,6 +16,7 @@ public class SwingLogMenuController extends SwingMenuController {
         super(swingLogMenuModel, swingLogMenuView, swingMainController);
 
         swingMainController.addPanel("LOG", swingMenuView, swingMenuView.getMenuBar());
+        addActionListeners();
     }
 
     @Override

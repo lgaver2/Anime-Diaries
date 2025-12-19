@@ -2,6 +2,8 @@
 
 package mvc.view;
 
+import repository.AnimeData;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -19,25 +21,6 @@ public class SwingMainMenuView extends SwingMenuView {
 
     public SwingMainMenuView() {
         super();
-
-        //create center scrollable list of animes
-        JPanel contentPanel = new JPanel();
-        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-
-        addButtons = new LinkedList<>();
-
-        for (int i = 1; i <= 15; i++) {
-            JPanel ligne = createLine("Title " + i, i, i + 2);
-            contentPanel.add(ligne);
-
-            contentPanel.add(Box.createRigidArea(new Dimension(0, 5)));
-        }
-
-        //create the footer
-        JScrollPane scrollPane = new JScrollPane(contentPanel);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-        add(scrollPane, BorderLayout.CENTER);
-
         JLabel foot = new JLabel("Main Menu");
         foot.setHorizontalAlignment(SwingConstants.CENTER);
         foot.setBackground(Color.LIGHT_GRAY);
@@ -45,6 +28,7 @@ public class SwingMainMenuView extends SwingMenuView {
 
         // initialize menu item here to not be freed
         addAnimeItem = new JMenuItem("Add anime");
+        addButtons = new LinkedList<>();
     }
 
     @Override
@@ -57,6 +41,20 @@ public class SwingMainMenuView extends SwingMenuView {
         return menuBar;
     }
 
+    public void addContents(LinkedList<JPanel> animeDatasPanels) {
+        //create center scrollable list of animes
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        for (JPanel row : animeDatasPanels) {
+            contentPanel.add(row);
+
+            contentPanel.add(Box.createRigidArea(new Dimension(0, 5)));
+        }
+        JScrollPane scrollPane = new JScrollPane(contentPanel);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        add(scrollPane, BorderLayout.CENTER);
+    }
+
 
     /**
      * Create the rows of animes
@@ -67,7 +65,7 @@ public class SwingMainMenuView extends SwingMenuView {
      * @return a JPanel with these informations plus two buttons (to view logs and
      * add a new entry)
      */
-    private JPanel createLine(String title, int score, int progress) {
+    public JPanel createRow(String title, float score, int progress) {
         JPanel row = new JPanel(new BorderLayout());
         row.setBackground(Color.WHITE);
         row.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -80,7 +78,7 @@ public class SwingMainMenuView extends SwingMenuView {
 
         JLabel animeTitle = new JLabel(title);
         animeTitle.setFont(animeTitle.getFont().deriveFont(Font.BOLD));
-        JLabel scoreLabel = new JLabel("AVG Score: " + Integer.toString(score));
+        JLabel scoreLabel = new JLabel("AVG Score: " + Float.toString(score));
         JLabel progressLabel = new JLabel("Progress: " + Integer.toString(progress) + "%");
 
         textPanel.add(animeTitle);

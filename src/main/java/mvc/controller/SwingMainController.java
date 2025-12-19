@@ -8,12 +8,16 @@ import mvc.view.SwingAddMenuView;
 import mvc.view.SwingLogMenuView;
 import mvc.view.SwingMainMenuView;
 import mvc.view.SwingMainView;
+import repository.AnimeData;
+import repository.DataLoader;
 
 import javax.swing.*;
+import java.util.HashMap;
 
 public class SwingMainController {
     private SwingMainModel swingMainModel;
     private SwingMainView swingMainView;
+    private SwingMainMenuController swingMainMenuController;
     public SwingMainController(SwingMainModel swingMainModel, SwingMainView swingMainView){
 
         this.swingMainModel = swingMainModel;
@@ -21,7 +25,7 @@ public class SwingMainController {
 
         SwingMainMenuView swingMainMenuView = new SwingMainMenuView();
         SwingMainMenuModel swingMainMenuModel = new SwingMainMenuModel();
-        SwingMainMenuController swingMainMenuController = new SwingMainMenuController(swingMainMenuModel, swingMainMenuView, this);
+        swingMainMenuController = new SwingMainMenuController(swingMainMenuModel, swingMainMenuView, this);
 
         SwingLogMenuView swingLogMenuView = new SwingLogMenuView();
         SwingLogMenuModel swingLogMenuModel = new SwingLogMenuModel();
@@ -31,7 +35,7 @@ public class SwingMainController {
         SwingAddMenuModel swingAddMenuModel = new SwingAddMenuModel();
         SwingAddMenuController swingAddMenuController = new SwingAddMenuController(swingAddMenuModel, swingAddMenuView, this);
 
-        this.swingMainView.switchMenuBar(swingMainMenuView.getMenuBar());
+        switchPanel("MENU");
     }
     public void addPanel(String panelName, JPanel panel, JMenuBar menuBar) {
         swingMainView.addCustomPanel(panel, panelName);
@@ -41,9 +45,20 @@ public class SwingMainController {
     public void switchPanel(String panelName){
         swingMainView.showPanel(panelName);
         swingMainView.switchMenuBar(swingMainModel.getMenuBarVal(panelName));
+        if (panelName.compareTo("MENU") == 0){
+            swingMainMenuController.reload();
+        }
     }
 
     public void display(){
         swingMainView.setVisible(true);
+    }
+
+    public DataLoader getDataLoader(){
+        return swingMainModel.getDataLoader();
+    }
+
+    public HashMap<String, AnimeData> getAnimeDatas(){
+        return swingMainModel.getAnimeDatas();
     }
 }
