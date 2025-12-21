@@ -77,4 +77,9 @@ public class SwingAddMenuView extends SwingMenuView {
     public String getEpisodes() {
         return episodesArea.getText();
     }
+
+    public void eraseInputs() {
+        titleArea.setText("");
+        episodesArea.setText("");
+    }
 }

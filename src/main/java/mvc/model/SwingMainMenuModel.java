@@ -11,11 +11,21 @@ import java.util.LinkedList;
 public class SwingMainMenuModel extends SwingMenuModel {
 
     LinkedList<JPanel> animeDatasPanels;
+    LinkedList<String> animeTitles;
     public SwingMainMenuModel() {
         animeDatasPanels = new LinkedList<>();
+        animeTitles = new LinkedList<>();
     }
 
     public LinkedList<JPanel> getAnimeDatasPanels() {
         return animeDatasPanels;
+    }
+
+    public LinkedList<String> getAnimeTitles() {
+        return animeTitles;
+    }
+
+    public void removeAllList(){
+        animeTitles.removeAll(animeTitles);
     }
 }

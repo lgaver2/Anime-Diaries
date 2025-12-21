@@ -17,7 +17,6 @@ import java.util.HashMap;
 public class SwingMainController {
     private SwingMainModel swingMainModel;
     private SwingMainView swingMainView;
-    private SwingMainMenuController swingMainMenuController;
     public SwingMainController(SwingMainModel swingMainModel, SwingMainView swingMainView){
 
         this.swingMainModel = swingMainModel;
@@ -25,7 +24,7 @@ public class SwingMainController {
 
         SwingMainMenuView swingMainMenuView = new SwingMainMenuView();
         SwingMainMenuModel swingMainMenuModel = new SwingMainMenuModel();
-        swingMainMenuController = new SwingMainMenuController(swingMainMenuModel, swingMainMenuView, this);
+        SwingMainMenuController swingMainMenuController = new SwingMainMenuController(swingMainMenuModel, swingMainMenuView, this);
 
         SwingLogMenuView swingLogMenuView = new SwingLogMenuView();
         SwingLogMenuModel swingLogMenuModel = new SwingLogMenuModel();
@@ -35,19 +34,18 @@ public class SwingMainController {
         SwingAddMenuModel swingAddMenuModel = new SwingAddMenuModel();
         SwingAddMenuController swingAddMenuController = new SwingAddMenuController(swingAddMenuModel, swingAddMenuView, this);
 
-        switchPanel("MENU");
+        switchMenu("MENU");
     }
-    public void addPanel(String panelName, JPanel panel, JMenuBar menuBar) {
-        swingMainView.addCustomPanel(panel, panelName);
-        swingMainModel.putMenuBar(panelName, menuBar);
+    public void addMenu(String menuName, SwingMenuController swingMenuController, JPanel panel, JMenuBar menuBar) {
+        swingMainView.addCustomPanel(panel, menuName);
+        swingMainModel.putMenuBar(menuName, menuBar);
+        swingMainModel.addMenuController(menuName, swingMenuController);
     }
 
-    public void switchPanel(String panelName){
-        swingMainView.showPanel(panelName);
-        swingMainView.switchMenuBar(swingMainModel.getMenuBarVal(panelName));
-        if (panelName.compareTo("MENU") == 0){
-            swingMainMenuController.reload();
-        }
+    public void switchMenu(String menuName){
+        swingMainView.showPanel(menuName);
+        swingMainView.switchMenuBar(swingMainModel.getMenuBarVal(menuName));
+        swingMainModel.getMenuController(menuName).onMenuChange();
     }
 
     public void display(){
@@ -60,5 +58,17 @@ public class SwingMainController {
 
     public HashMap<String, AnimeData> getAnimeDatas(){
         return swingMainModel.getAnimeDatas();
+    }
+    public String getCurrentAnime() {
+        return swingMainModel.getCurrentAnime();
+    }
+    public void setCurrentAnime(String title){
+        swingMainModel.setCurrentAnime(title);
+    }
+
+    public void addAnimeData(String title, int totalEpisodes){
+        AnimeData newAnime = new AnimeData(title, 0, totalEpisodes, 1, null);
+        getDataLoader().save(newAnime);
+        swingMainModel.addAnimeData(title, newAnime);
     }
 }

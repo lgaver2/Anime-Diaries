@@ -20,13 +20,15 @@ public class SwingMainMenuController extends SwingMenuController {
     public SwingMainMenuController(SwingMenuModel swingMenuModel, SwingMenuView swingMenuView, SwingMainController swingMainController) {
         super(swingMenuModel, swingMenuView, swingMainController);
 
-        loadAnimeDatas();
-        ((SwingMainMenuView) swingMenuView).addContents(((SwingMainMenuModel) swingMenuModel).getAnimeDatasPanels());
+
         addActionListeners();
-        swingMainController.addPanel("MENU", swingMenuView, swingMenuView.getMenuBar());
+        swingMainController.addMenu("MENU", this, swingMenuView, swingMenuView.getMenuBar());
     }
 
-    public void reload(){
+    @Override
+    protected void onMenuChange() {
+        loadAnimeDatas();
+        ((SwingMainMenuView) swingMenuView).addContents(((SwingMainMenuModel) swingMenuModel).getAnimeDatasPanels());
     }
 
     @Override
@@ -35,23 +37,32 @@ public class SwingMainMenuController extends SwingMenuController {
         SwingMainMenuView swingMainMenuView = (SwingMainMenuView) this.swingMenuView;
 
         swingMainMenuView.getAddAnimeItem().addActionListener(e -> {
-            swingMainController.switchPanel("ADD");
+            swingMainController.switchMenu("ADD");
         });
+    }
 
-        for (JButton jButton : swingMainMenuView.getAddButtons()) {
-            jButton.addActionListener(e -> {
-                swingMainController.switchPanel("LOG");
-            });
-        }
+    private void switchLog(String animeTitle) {
+        swingMainController.setCurrentAnime(animeTitle);
+        swingMainController.switchMenu("LOG");
     }
 
     private void loadAnimeDatas() {
+        int i = 0;
+        ((SwingMainMenuModel) swingMenuModel).removeAllList();
         for (Map.Entry<String, AnimeData> set : swingMainController.getAnimeDatas().entrySet()) {
             String title = set.getKey();
+            System.out.println(title);
             float avgScore = set.getValue().getAverageScore();
             int progress = (int) Math.floor((float) set.getValue().getCurrentEpisode() / set.getValue().getTotalEpisodeNumber() * 100);
             JPanel row = ((SwingMainMenuView) swingMenuView).createRow(title, avgScore, progress);
             ((SwingMainMenuModel) swingMenuModel).getAnimeDatasPanels().add(row);
+            ((SwingMainMenuModel) swingMenuModel).getAnimeTitles().add(title);
+
+            ((SwingMainMenuView) swingMenuView).getAddButtons()
+                    .get(i++)
+                    .addActionListener(e -> {
+                        switchLog(title);
+                    });
         }
     }
 }

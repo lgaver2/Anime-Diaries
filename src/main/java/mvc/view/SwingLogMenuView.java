@@ -14,6 +14,8 @@ public class SwingLogMenuView extends SwingMenuView {
     private JMenuItem cancelItem;
     private JButton commitButton;
     private JLabel titleLabel;
+    private JTextArea scoreArea;
+    private JTextArea commentArea;
 
     public SwingLogMenuView() {
         super();
@@ -33,7 +35,7 @@ public class SwingLogMenuView extends SwingMenuView {
         scorePanel.setOpaque(false);
         
         JLabel scoreLabel = new JLabel("Your score");
-        JTextArea scoreArea = new JTextArea(1, 20);
+        scoreArea = new JTextArea(1, 20);
         scoreArea.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         
         scorePanel.add(scoreLabel, BorderLayout.NORTH);
@@ -46,8 +48,8 @@ public class SwingLogMenuView extends SwingMenuView {
         commentPanel.setOpaque(false);
         
         JLabel commentLabel = new JLabel("Comment for this episode");
-        JTextArea textArea = new JTextArea();
-        JScrollPane scroll = new JScrollPane(textArea);
+        commentArea = new JTextArea();
+        JScrollPane scroll = new JScrollPane(commentArea);
         commitButton = new JButton("Commit");
         
         commentPanel.add(commentLabel, BorderLayout.NORTH);
@@ -85,5 +87,25 @@ public class SwingLogMenuView extends SwingMenuView {
 
     public JMenuItem getCommitItem() {
         return commitItem;
+    }
+    public JButton getCommitButton(){
+        return commitButton;
+    }
+
+    public void setTitleLabel(String title) {
+        titleLabel.setText(title);
+    }
+
+    public String getScore() {
+        return scoreArea.getText();
+    }
+
+    public String getComment() {
+        return commentArea.getText();
+    }
+
+    public void eraseInputs(){
+        scoreArea.setText("");
+        commentArea.setText("");
     }
 }

@@ -18,7 +18,7 @@ public class SwingMainMenuView extends SwingMenuView {
     private JMenuItem addAnimeItem;
 
     private LinkedList<JButton> addButtons;
-
+    private JPanel contentPanel;
     public SwingMainMenuView() {
         super();
         JLabel foot = new JLabel("Main Menu");
@@ -29,6 +29,11 @@ public class SwingMainMenuView extends SwingMenuView {
         // initialize menu item here to not be freed
         addAnimeItem = new JMenuItem("Add anime");
         addButtons = new LinkedList<>();
+        contentPanel = new JPanel();
+
+        JScrollPane scrollPane = new JScrollPane(contentPanel);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        add(scrollPane, BorderLayout.CENTER);
     }
 
     @Override
@@ -43,16 +48,15 @@ public class SwingMainMenuView extends SwingMenuView {
 
     public void addContents(LinkedList<JPanel> animeDatasPanels) {
         //create center scrollable list of animes
-        JPanel contentPanel = new JPanel();
+        contentPanel.removeAll();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         for (JPanel row : animeDatasPanels) {
             contentPanel.add(row);
 
             contentPanel.add(Box.createRigidArea(new Dimension(0, 5)));
         }
-        JScrollPane scrollPane = new JScrollPane(contentPanel);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-        add(scrollPane, BorderLayout.CENTER);
+        contentPanel.revalidate();
+        contentPanel.repaint();
     }
 
 

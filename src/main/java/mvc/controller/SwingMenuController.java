@@ -25,4 +25,6 @@ public abstract class SwingMenuController {
             System.exit(0);
         });
     }
+
+    protected void onMenuChange(){};
 }

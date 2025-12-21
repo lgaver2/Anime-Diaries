@@ -1,5 +1,6 @@
 package mvc.model;
 
+import mvc.controller.SwingMenuController;
 import repository.AnimeData;
 import repository.DataLoader;
 
@@ -10,10 +11,13 @@ public class SwingMainModel {
     private HashMap<String, JMenuBar> menuBarDict;
     private HashMap<String, AnimeData> animeDatas;
     private DataLoader dataLoader;
+    private String currentAnime;
+    private HashMap<String, SwingMenuController> menuControllers;
 
     public SwingMainModel(DataLoader dataLoader) {
         this.dataLoader = dataLoader;
         menuBarDict = new HashMap<>();
+        menuControllers = new HashMap<>();
         animeDatas = dataLoader.loadAllDatas();
     }
 
@@ -32,4 +36,24 @@ public class SwingMainModel {
     public HashMap<String, AnimeData> getAnimeDatas() {
         return animeDatas;
     }
+
+    public String getCurrentAnime() {
+        return currentAnime;
+    }
+
+    public void setCurrentAnime(String currentAnime) {
+        this.currentAnime = currentAnime;
+    }
+
+    public void addMenuController(String menuName, SwingMenuController swingMenuController){
+        menuControllers.put(menuName, swingMenuController);
+    }
+
+    public SwingMenuController getMenuController(String menuName) {
+        return menuControllers.get(menuName);
+    }
+
+   public void addAnimeData(String title, AnimeData animeData){
+        animeDatas.put(title, animeData);
+   }
 }

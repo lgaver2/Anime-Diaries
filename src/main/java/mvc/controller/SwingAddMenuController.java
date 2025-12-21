@@ -4,13 +4,12 @@ import mvc.model.SwingMenuModel;
 import mvc.view.SwingAddMenuView;
 import mvc.view.SwingMenuView;
 import repository.AnimeData;
-import repository.DataLoader;
 
 public class SwingAddMenuController extends SwingMenuController {
     public SwingAddMenuController(SwingMenuModel swingMenuModel, SwingMenuView swingMenuView, SwingMainController swingMainController) {
         super(swingMenuModel, swingMenuView, swingMainController);
 
-        swingMainController.addPanel("ADD", swingMenuView, swingMenuView.getMenuBar());
+        swingMainController.addMenu("ADD", this, swingMenuView, swingMenuView.getMenuBar());
         addActionListeners();
     }
 
@@ -23,6 +22,14 @@ public class SwingAddMenuController extends SwingMenuController {
         swingAddMenuView.getAddButton().addActionListener(e -> {
             addAnimeAction();
         });
+
+        swingAddMenuView.getCommitItem().addActionListener(e -> {
+            addAnimeAction();
+        });
+
+        swingAddMenuView.getCancelItem().addActionListener(e -> {
+            swingMainController.switchMenu("MENU");
+        });
     }
 
     private void addAnimeAction(){
@@ -31,8 +38,7 @@ public class SwingAddMenuController extends SwingMenuController {
         //! add test here
         int totalEpisodes = Integer.parseInt(swingAddMenuView.getEpisodes());
 
-        AnimeData newAnime = new AnimeData(title, 0, totalEpisodes, 1, null);
-        swingMainController.getDataLoader().save(newAnime);
-        swingMainController.switchPanel("MENU");
+        swingMainController.addAnimeData(title, totalEpisodes);
+        swingMainController.switchMenu("MENU");
     }
 }
