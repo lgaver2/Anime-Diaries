@@ -1,13 +1,7 @@
 package mvc.controller;
 
-import mvc.model.SwingAddMenuModel;
-import mvc.model.SwingLogMenuModel;
-import mvc.model.SwingMainMenuModel;
-import mvc.model.SwingMainModel;
-import mvc.view.SwingAddMenuView;
-import mvc.view.SwingLogMenuView;
-import mvc.view.SwingMainMenuView;
-import mvc.view.SwingMainView;
+import mvc.model.*;
+import mvc.view.*;
 import repository.AnimeData;
 import repository.DataLoader;
 
@@ -29,6 +23,10 @@ public class SwingMainController {
         SwingLogMenuView swingLogMenuView = new SwingLogMenuView();
         SwingLogMenuModel swingLogMenuModel = new SwingLogMenuModel();
         SwingLogMenuController swingLogMenuController = new SwingLogMenuController(swingLogMenuModel, swingLogMenuView, this);
+
+        SwingViewMenuModel swingViewMenuModel = new SwingViewMenuModel();
+        SwingViewMenuView swingViewMenuView = new SwingViewMenuView();
+        SwingViewMenuController swingViewMenuController = new SwingViewMenuController(swingViewMenuModel, swingViewMenuView, this);
 
         SwingAddMenuView swingAddMenuView = new SwingAddMenuView();
         SwingAddMenuModel swingAddMenuModel = new SwingAddMenuModel();

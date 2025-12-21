@@ -46,6 +46,11 @@ public class SwingMainMenuController extends SwingMenuController {
         swingMainController.switchMenu("LOG");
     }
 
+    private void switchView(String animeTitle) {
+        swingMainController.setCurrentAnime(animeTitle);
+        swingMainController.switchMenu("VIEW");
+    }
+
     private void loadAnimeDatas() {
         int i = 0;
         ((SwingMainMenuModel) swingMenuModel).removeAllList();
@@ -58,11 +63,18 @@ public class SwingMainMenuController extends SwingMenuController {
             ((SwingMainMenuModel) swingMenuModel).getAnimeDatasPanels().add(row);
             ((SwingMainMenuModel) swingMenuModel).getAnimeTitles().add(title);
 
+            // set actions to buttons
             ((SwingMainMenuView) swingMenuView).getAddButtons()
-                    .get(i++)
+                    .get(i)
                     .addActionListener(e -> {
                         switchLog(title);
                     });
+             ((SwingMainMenuView) swingMenuView).getViewButtons()
+                    .get(i)
+                    .addActionListener(e -> {
+                        switchView(title);
+                    });
+             i++;
         }
     }
 }

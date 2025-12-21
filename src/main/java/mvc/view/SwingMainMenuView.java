@@ -18,6 +18,7 @@ public class SwingMainMenuView extends SwingMenuView {
     private JMenuItem addAnimeItem;
 
     private LinkedList<JButton> addButtons;
+    private LinkedList<JButton> viewButtons;
     private JPanel contentPanel;
     public SwingMainMenuView() {
         super();
@@ -29,6 +30,7 @@ public class SwingMainMenuView extends SwingMenuView {
         // initialize menu item here to not be freed
         addAnimeItem = new JMenuItem("Add anime");
         addButtons = new LinkedList<>();
+        viewButtons = new LinkedList<>();
         contentPanel = new JPanel();
 
         JScrollPane scrollPane = new JScrollPane(contentPanel);
@@ -101,6 +103,7 @@ public class SwingMainMenuView extends SwingMenuView {
 
         buttonsPanel.add(btn1);
         addButtons.add(btn1);
+        viewButtons.add(btn2);
         buttonsPanel.add(btn2);
 
         row.add(buttonsPanel, BorderLayout.EAST);
@@ -115,6 +118,8 @@ public class SwingMainMenuView extends SwingMenuView {
     public LinkedList<JButton> getAddButtons() {
         return this.addButtons;
     }
-
+    public LinkedList<JButton> getViewButtons() {
+        return this.viewButtons;
+    }
 
 }
