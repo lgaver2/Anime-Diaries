@@ -22,8 +22,6 @@ public class Main {
         SwingMainController swingMainController = new SwingMainController(swingMainModel, swingMainView);
 
         swingMainController.display();
-        AnimeData a = new AnimeData("a", 1,1,1,null);
-        jsonDataLoader.save(a);
     }
 }
 
