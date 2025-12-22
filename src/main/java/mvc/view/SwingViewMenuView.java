@@ -5,6 +5,7 @@ import repository.AnimeCommentData;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class SwingViewMenuView extends SwingMenuView {
         //create center scrollable list of animes
 
         for (Map.Entry<Integer, AnimeCommentData> set : comments.entrySet()) {
-            JPanel row = createRow(set.getKey(), set.getValue().getScore(), set.getValue().getComment());
+            JPanel row = createRow(set.getKey(), set.getValue().getScore(), set.getValue().getComment(), set.getValue().getLogDate());
             contentPanel.add(row);
 
             contentPanel.add(Box.createRigidArea(new Dimension(0, 5)));
@@ -55,7 +56,7 @@ public class SwingViewMenuView extends SwingMenuView {
         contentPanel.repaint();
     }
 
-    public JPanel createRow(int currentEpisode, float score, String comment) {
+    public JPanel createRow(int currentEpisode, float score, String comment, Date date) {
         JPanel row = new JPanel(new BorderLayout());
         row.setBackground(Color.WHITE);
         row.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -63,7 +64,7 @@ public class SwingViewMenuView extends SwingMenuView {
         row.setPreferredSize(new Dimension(500, 100));
 
         JLabel episodeLabel = new JLabel("Ep:" + currentEpisode);
-        JLabel scoreLabel = new JLabel("Score: " + Float.toString(score));
+        JLabel scoreLabel = new JLabel("Score: " + Float.toString(score) + " on " + date.toString());
         JLabel commentLabel = new JLabel(comment);
 
         row.add(episodeLabel, BorderLayout.NORTH);

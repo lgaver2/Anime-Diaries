@@ -36,6 +36,7 @@ public class SwingViewMenuController extends SwingMenuController {
 
         // remove the previous content
         swingViewMenuView.removeContent();
+
         // if the anime does not have any comment do nothing
         if (swingViewMenuModel.getAnimeCommentData() != null)
             swingViewMenuView.addContents(swingViewMenuModel.getAnimeCommentData());
