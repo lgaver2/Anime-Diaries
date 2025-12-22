@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 package mvc.view;
 
 import javax.swing.*;

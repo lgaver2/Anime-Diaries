@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: MIT
-
 import mvc.controller.SwingMainController;
 import mvc.model.SwingMainModel;
 import repository.AnimeCommentData;
