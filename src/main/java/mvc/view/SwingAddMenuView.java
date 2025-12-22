@@ -5,11 +5,15 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class SwingAddMenuView extends SwingMenuView {
-    private JMenuItem commitItem;
-    private JMenuItem cancelItem;
-    private JButton addButton;
-    JTextArea titleArea;
-    JTextArea episodesArea;
+    // for menu bar
+    private final JMenuItem commitItem;
+    private final JMenuItem returnItem;
+
+    // button to commit the input
+    private final JButton addButton;
+    // text areas
+    private final JTextArea titleArea;
+    private final JTextArea episodesArea;
 
     public SwingAddMenuView() {
         super();
@@ -18,6 +22,8 @@ public class SwingAddMenuView extends SwingMenuView {
         innerPanel.setOpaque(false);
         innerPanel.setBorder(new EmptyBorder(0, 10, 0, 10));
 
+        // create the input field
+        // create label for the explanation of the text areas
         JLabel titleLabel = new JLabel("Anime Title");
         JLabel episodesLabel = new JLabel("Number of episodes");
 
@@ -33,6 +39,7 @@ public class SwingAddMenuView extends SwingMenuView {
         add(innerPanel, BorderLayout.NORTH);
 
         // footer
+        // create the commit button
         JPanel footPanel = new JPanel(new BorderLayout());
         addButton = new JButton("ADD");
         addButton.setHorizontalAlignment(SwingConstants.CENTER);
@@ -42,9 +49,9 @@ public class SwingAddMenuView extends SwingMenuView {
         footPanel.add(foot, BorderLayout.SOUTH);
         add(footPanel);
 
-
+        // create the menu bar items
         commitItem = new JMenuItem("Commit");
-        cancelItem = new JMenuItem("Cancel");
+        returnItem = new JMenuItem("Return");
     }
 
     @Override
@@ -52,7 +59,7 @@ public class SwingAddMenuView extends SwingMenuView {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuFile = new JMenu("File");
         menuFile.add(commitItem);
-        menuFile.add(cancelItem);
+        menuFile.add(returnItem);
         menuFile.add(quitItem);
         menuBar.add(menuFile);
         return menuBar;
@@ -62,8 +69,8 @@ public class SwingAddMenuView extends SwingMenuView {
         return commitItem;
     }
 
-    public JMenuItem getCancelItem() {
-        return cancelItem;
+    public JMenuItem getReturnItem() {
+        return returnItem;
     }
 
     public JButton getAddButton() {
@@ -78,6 +85,10 @@ public class SwingAddMenuView extends SwingMenuView {
         return episodesArea.getText();
     }
 
+    /**
+     * to reset the input fields values
+     * called when refresh the page
+     */
     public void eraseInputs() {
         titleArea.setText("");
         episodesArea.setText("");

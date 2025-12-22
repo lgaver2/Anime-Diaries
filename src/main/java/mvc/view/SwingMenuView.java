@@ -13,6 +13,11 @@ public abstract class SwingMenuView extends JPanel {
         quitItem = new JMenuItem("Quit");
     }
 
+    /**
+     * Method to create and return the custom menu bar of the screen
+     * each menu bar has a quit item
+     * @return
+     */
     public JMenuBar getMenuBar() {
         return new JMenuBar();
     }

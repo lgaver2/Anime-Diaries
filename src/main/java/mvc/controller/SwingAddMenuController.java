@@ -3,13 +3,10 @@ package mvc.controller;
 import mvc.model.SwingMenuModel;
 import mvc.view.SwingAddMenuView;
 import mvc.view.SwingMenuView;
-import repository.AnimeData;
-
-import javax.swing.*;
 
 /**
  * SwingAddMenuController
- * class wich control the screen to add new anime in the watch list
+ * class which control the screen to add new anime in the watch list
  */
 public class SwingAddMenuController extends SwingMenuController {
     public SwingAddMenuController(SwingMenuModel swingMenuModel, SwingMenuView swingMenuView, SwingMainController swingMainController) {
@@ -33,7 +30,7 @@ public class SwingAddMenuController extends SwingMenuController {
             addAnimeAction();
         });
 
-        swingAddMenuView.getCancelItem().addActionListener(e -> {
+        swingAddMenuView.getReturnItem().addActionListener(e -> {
             swingMainController.switchMenu("MENU");
         });
     }
@@ -52,6 +49,7 @@ public class SwingAddMenuController extends SwingMenuController {
     private void addAnimeAction() {
         try {
             SwingAddMenuView swingAddMenuView = (SwingAddMenuView) swingMenuView;
+            // get user inputs
             String title = swingAddMenuView.getTitle();
             int totalEpisodes = Integer.parseInt(swingAddMenuView.getEpisodes());
             // number of episodes cannot be negative
@@ -60,7 +58,9 @@ public class SwingAddMenuController extends SwingMenuController {
             // if not all fields are completed
             if (title.compareTo("") == 0)
                 throw new UncompleteFieldException();
-            swingMainController.addAnimeData(title, totalEpisodes);
+
+            // if no problems save the data and go back to main menu
+            swingMainController.storeAnimeData(title, totalEpisodes);
             swingMainController.switchMenu("MENU");
         } catch (NumberFormatException e) {
             swingMainController.showAlert("Please put an non-negative integer");

@@ -11,9 +11,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
+/**
+ * implementation of the data loader to store/load in json format
+ * use Jakson package
+ */
 public class JsonDataLoader implements DataLoader{
-    private String pathPrefix;
-    private String pathSuffix;
+    // the path prefix (data/)
+    private final String pathPrefix;
+    // the path suffix or file suffix (-diary.json)
+    private final String pathSuffix;
 
     public JsonDataLoader(String filePath) {
 
@@ -26,7 +32,6 @@ public class JsonDataLoader implements DataLoader{
         ObjectMapper mapper = new ObjectMapper();
         AnimeData loadedData;
         try {
-            // 3. Define the file path (saves to the project root folder)
             File file = new File(pathPrefix+title+"-diary.json");
             loadedData = mapper.readValue(file, AnimeData.class);
 
@@ -42,14 +47,19 @@ public class JsonDataLoader implements DataLoader{
     public HashMap<String, AnimeData> loadAllDatas() throws IOException{
 
         HashMap<String, AnimeData> animeDatas = new HashMap<>();
+        // remove the / because not compatible with the next loop
         Path dir = Paths.get(StringUtils.removeEnd(pathPrefix, "/"));
 
         // loop on .json files
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, "*.json")) {
             for (Path p : stream) {
+                // get the file name and remove parts which are unuseful as datas/ and -diary.json
+                // to get the original anime title
                 String animeTitle = p.toString();
                 animeTitle = StringUtils.removeStart(animeTitle, pathPrefix);
                 animeTitle = StringUtils.removeEnd(animeTitle, pathSuffix);
+
+                // laod the single anime data
                 AnimeData animeData = load(animeTitle);
                 animeDatas.put(animeTitle, animeData);
             }
@@ -67,11 +77,7 @@ public class JsonDataLoader implements DataLoader{
             File file = new File(pathPrefix+animeData.getTitle()+"-diary.json");
 
             mapper.writeValue(file, animeData);
-
-            System.out.println("Success! Saved to " + file.getAbsolutePath());
-
             String jsonString = mapper.writeValueAsString(animeData);
-            System.out.println("JSON Output: " + jsonString);
 
         } catch (IOException e) {
             e.printStackTrace();

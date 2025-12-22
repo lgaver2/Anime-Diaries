@@ -2,12 +2,19 @@ package repository;
 
 import java.util.HashMap;
 
+/**
+ * AnimeData
+ * the main class for this application to store critical data as
+ * - title, score, number of episodes
+ * - the list of each comments for one anime
+ * Just for one anime
+ */
 public class AnimeData {
     private String title;
     private float averageScore;
     private int totalEpisodeNumber;
     private int currentEpisode;
-
+    // list of comments indexed by the episode
     private HashMap<Integer, AnimeCommentData> comments;
 
     public AnimeData(String title, float averageScore, int totalEpisodeNumber, int currentEpisode, HashMap<Integer, AnimeCommentData> comments) {
@@ -17,7 +24,7 @@ public class AnimeData {
         this.currentEpisode = currentEpisode;
         this.comments = comments;
     }
-
+    // for Jakson which use a void constructor
     public AnimeData() {
     }
 

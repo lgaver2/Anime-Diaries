@@ -20,14 +20,15 @@ public class SwingMainMenuController extends SwingMenuController {
     public SwingMainMenuController(SwingMenuModel swingMenuModel, SwingMenuView swingMenuView, SwingMainController swingMainController) {
         super(swingMenuModel, swingMenuView, swingMainController);
 
-
         addActionListeners();
         swingMainController.addMenu("MENU", this, swingMenuView, swingMenuView.getMenuBar());
     }
 
     @Override
     protected void onMenuChange() {
+        // create the rows
         loadAnimeDatas();
+        // add the created rows to the main window
         ((SwingMainMenuView) swingMenuView).addContents(((SwingMainMenuModel) swingMenuModel).getAnimeDatasPanels());
     }
 
@@ -61,6 +62,9 @@ public class SwingMainMenuController extends SwingMenuController {
         swingMainController.switchMenu("VIEW");
     }
 
+    /**
+     * Method to load and create each rows of anime wich the user is viewing
+     */
     private void loadAnimeDatas() {
         int i = 0;
         SwingMainMenuModel swingMainMenuModel = (SwingMainMenuModel) swingMenuModel;
@@ -71,11 +75,15 @@ public class SwingMainMenuController extends SwingMenuController {
         swingMainMenuModel.removeAllList();
 
 
+        // create rows for each anime
         for (Map.Entry<String, AnimeData> set : swingMainController.getAnimeDatas().entrySet()) {
+            // get datas
             String title = set.getKey();
             System.out.println(title);
             float avgScore = set.getValue().getAverageScore();
             int progress = (int) Math.floor((float) set.getValue().getCurrentEpisode() / set.getValue().getTotalEpisodeNumber() * 100);
+
+            // create the row and store to the model to use in the second part of onMenuChange
             JPanel row = swingMainMenuView.createRow(title, avgScore, progress);
             swingMainMenuModel.getAnimeDatasPanels().add(row);
 

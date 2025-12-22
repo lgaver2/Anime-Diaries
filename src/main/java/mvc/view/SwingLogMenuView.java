@@ -10,12 +10,12 @@ import java.awt.*;
  * SwingLogMenuView
  */
 public class SwingLogMenuView extends SwingMenuView {
-    private JMenuItem commitItem;
-    private JMenuItem cancelItem;
-    private JButton commitButton;
-    private JLabel titleLabel;
-    private JTextArea scoreArea;
-    private JTextArea commentArea;
+    private final JMenuItem commitItem;
+    private final JMenuItem returnItem;
+    private final JButton commitButton;
+    private final JLabel titleLabel;
+    private final JTextArea scoreArea;
+    private final JTextArea commentArea;
 
     public SwingLogMenuView() {
         super();
@@ -66,8 +66,9 @@ public class SwingLogMenuView extends SwingMenuView {
         foot.setBackground(Color.LIGHT_GRAY);
         add(foot, BorderLayout.SOUTH);
 
+        // create the menu bar items
         commitItem = new JMenuItem("Commit");
-        cancelItem = new JMenuItem("Cancel");
+        returnItem = new JMenuItem("Return");
     }
 
     @Override
@@ -75,14 +76,14 @@ public class SwingLogMenuView extends SwingMenuView {
         JMenuBar menuBar = new JMenuBar();
         JMenu menuFile = new JMenu("File");
         menuFile.add(commitItem);
-        menuFile.add(cancelItem);
+        menuFile.add(returnItem);
         menuFile.add(quitItem);
         menuBar.add(menuFile);
         return menuBar;
     }
 
-    public JMenuItem getCancelItem() {
-        return cancelItem;
+    public JMenuItem getReturnItem() {
+        return returnItem;
     }
 
     public JMenuItem getCommitItem() {
@@ -104,6 +105,9 @@ public class SwingLogMenuView extends SwingMenuView {
         return commentArea.getText();
     }
 
+    /**
+     * Method to erase former values in input field
+     */
     public void eraseInputs(){
         scoreArea.setText("");
         commentArea.setText("");

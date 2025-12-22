@@ -9,6 +9,7 @@ import repository.DataLoader;
 
 /**
  * MainMenuController
+ * The abstract class for the screen controllers
  */
 public abstract class SwingMenuController {
     protected SwingMenuModel swingMenuModel;
@@ -20,11 +21,17 @@ public abstract class SwingMenuController {
         this.swingMainController = swingMainController;
     }
 
+    /**
+     * add actions to the buttons
+     */
     protected void addActionListeners(){
         swingMenuView.getQuitItem().addActionListener(e -> {
             System.exit(0);
         });
     }
 
+    /**
+     * Method to have a custom function when the screen change
+     */
     protected void onMenuChange(){};
 }

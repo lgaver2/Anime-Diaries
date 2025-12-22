@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 /**
  * SwingLogMenuController
- * class wich control the screen where user put comment and score of the current episode
+ * class which control the screen where user put comment and score of the current episode
  */
 public class SwingLogMenuController extends SwingMenuController {
     public SwingLogMenuController(SwingLogMenuModel swingLogMenuModel, SwingLogMenuView swingLogMenuView, SwingMainController swingMainController) {
@@ -37,7 +37,7 @@ public class SwingLogMenuController extends SwingMenuController {
             storeEntry();
         });
 
-        swingLogMenuView.getCancelItem().addActionListener(e -> {
+        swingLogMenuView.getReturnItem().addActionListener(e -> {
             this.swingMainController.switchMenu("MENU");
         });
     }
@@ -84,6 +84,8 @@ public class SwingLogMenuController extends SwingMenuController {
             if (comment.compareTo("") == 0)
                 throw new UncompleteFieldException();
 
+            // get the title of the anime wich the user is
+            // writing a comment
             String title = swingLogMenuModel.getTitle();
             AnimeData animeData = swingLogMenuModel.getLoadedData();
 
@@ -99,6 +101,8 @@ public class SwingLogMenuController extends SwingMenuController {
             }
 
             int currentEpisode = animeData.getCurrentEpisode();
+
+            // add directly to the anime hashset to not load all anime every times
             animeCommentData.put(currentEpisode, new AnimeCommentData(Date.from(Instant.now()), score, comment));
 
 
