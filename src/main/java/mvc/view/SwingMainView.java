@@ -33,4 +33,8 @@ public class SwingMainView extends JFrame {
         this.revalidate();
         this.repaint();
     }
+
+    public void showAlert(String alertMessage){
+        JOptionPane.showMessageDialog(this, alertMessage, "Anime Diaries",JOptionPane.WARNING_MESSAGE);
+    }
 }

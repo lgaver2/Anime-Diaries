@@ -41,11 +41,21 @@ public class SwingMainMenuController extends SwingMenuController {
         });
     }
 
+    /**
+     * Method call when switch form main menu to log menu
+     * when user want to add a new comment
+     * @param animeTitle the title wich user choose
+     */
     private void switchLog(String animeTitle) {
         swingMainController.setCurrentAnime(animeTitle);
         swingMainController.switchMenu("LOG");
     }
 
+    /**
+     * Method call when switch from main menu to view menu
+     * when user want to see former comments
+     * @param animeTitle the title wich user choose
+     */
     private void switchView(String animeTitle) {
         swingMainController.setCurrentAnime(animeTitle);
         swingMainController.switchMenu("VIEW");
@@ -53,28 +63,34 @@ public class SwingMainMenuController extends SwingMenuController {
 
     private void loadAnimeDatas() {
         int i = 0;
-        ((SwingMainMenuModel) swingMenuModel).removeAllList();
+        SwingMainMenuModel swingMainMenuModel = (SwingMainMenuModel) swingMenuModel;
+        SwingMainMenuView swingMainMenuView = (SwingMainMenuView) swingMenuView;
+
+        // reset former settings
+        swingMainMenuView.resetButtons();
+        swingMainMenuModel.removeAllList();
+
+
         for (Map.Entry<String, AnimeData> set : swingMainController.getAnimeDatas().entrySet()) {
             String title = set.getKey();
             System.out.println(title);
             float avgScore = set.getValue().getAverageScore();
             int progress = (int) Math.floor((float) set.getValue().getCurrentEpisode() / set.getValue().getTotalEpisodeNumber() * 100);
-            JPanel row = ((SwingMainMenuView) swingMenuView).createRow(title, avgScore, progress);
-            ((SwingMainMenuModel) swingMenuModel).getAnimeDatasPanels().add(row);
-            ((SwingMainMenuModel) swingMenuModel).getAnimeTitles().add(title);
+            JPanel row = swingMainMenuView.createRow(title, avgScore, progress);
+            swingMainMenuModel.getAnimeDatasPanels().add(row);
 
             // set actions to buttons
-            ((SwingMainMenuView) swingMenuView).getAddButtons()
+            swingMainMenuView.getAddButtons()
                     .get(i)
                     .addActionListener(e -> {
                         switchLog(title);
                     });
-             ((SwingMainMenuView) swingMenuView).getViewButtons()
+            swingMainMenuView.getViewButtons()
                     .get(i)
                     .addActionListener(e -> {
                         switchView(title);
                     });
-             i++;
+            i++;
         }
     }
 }

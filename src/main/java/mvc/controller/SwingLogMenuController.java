@@ -7,12 +7,14 @@ import mvc.view.SwingLogMenuView;
 import repository.AnimeCommentData;
 import repository.AnimeData;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.time.Instant;
 import java.util.HashMap;
 
 /**
  * SwingLogMenuController
+ * class wich control the screen where user put comment and score of the current episode
  */
 public class SwingLogMenuController extends SwingMenuController {
     public SwingLogMenuController(SwingLogMenuModel swingLogMenuModel, SwingLogMenuView swingLogMenuView, SwingMainController swingMainController) {
@@ -45,49 +47,74 @@ public class SwingLogMenuController extends SwingMenuController {
         SwingLogMenuModel swingLogMenuModel = (SwingLogMenuModel) swingMenuModel;
         SwingLogMenuView swingLogMenuView = (SwingLogMenuView) swingMenuView;
 
-        String title = swingMainController.getCurrentAnime();
-        ((SwingLogMenuModel) swingMenuModel).setTitle(title);
-        swingLogMenuModel.setLoadedData(swingMainController.getDataLoader().load(title));
+        try {
+            //erase previous input fields
+            swingLogMenuView.eraseInputs();
 
-        int currentEpisode = swingLogMenuModel.getLoadedData().getCurrentEpisode();
-        swingLogMenuView.setTitleLabel(title + " ep:" + currentEpisode);
+            // when change menu get the anime title wich the user clicked (stored by mainMenuController)
+            String title = swingMainController.getCurrentAnime();
+            // store the title in the model
+            swingLogMenuModel.setTitle(title);
+            // get the datas from the json file
+            swingLogMenuModel.setLoadedData(swingMainController.getDataLoader().load(title));
+
+            int currentEpisode = swingLogMenuModel.getLoadedData().getCurrentEpisode();
+            // set title + the current episode on the topbar of the screen
+            swingLogMenuView.setTitleLabel(title + " ep:" + currentEpisode);
+        } catch (IOException e) {
+            swingMainController.showAlert("Failed to load datas.");
+        }
     }
 
+    /**
+     * Method to store the comment and score of the user
+     * show error box if not complete all fields or not an integer less than 5
+     */
     private void storeEntry() {
         SwingLogMenuView swingLogMenuView = (SwingLogMenuView) swingMenuView;
         SwingLogMenuModel swingLogMenuModel = (SwingLogMenuModel) swingMenuModel;
 
-        // get datas
-        int score = Integer.parseInt(swingLogMenuView.getScore());
-        //! add test here
-        String comment = swingLogMenuView.getComment();
+        try {
+            // get user inputs with a test
+            int score = Integer.parseInt(swingLogMenuView.getScore());
+            if (score <= 0 || 5 < score)
+                throw new NumberFormatException();
+            String comment = swingLogMenuView.getComment();
 
-        String title = swingLogMenuModel.getTitle();
-        AnimeData animeData = swingLogMenuModel.getLoadedData();
+            if (comment.compareTo("") == 0)
+                throw new UncompleteFieldException();
 
-        // add a new entry for comment if it is the first comment
-        HashMap<Integer, AnimeCommentData> animeCommentData;
-        float newAvgScore;
-        if (animeData.getComments() == null) {
-            animeCommentData = new HashMap<>();
-            newAvgScore = score;
-        } else {
-            animeCommentData = animeData.getComments();
-            newAvgScore = score + animeData.getAverageScore() / 2;
+            String title = swingLogMenuModel.getTitle();
+            AnimeData animeData = swingLogMenuModel.getLoadedData();
+
+            // add a new entry for comment if it is the first comment
+            HashMap<Integer, AnimeCommentData> animeCommentData;
+            float newAvgScore;
+            if (animeData.getComments() == null) {
+                animeCommentData = new HashMap<>();
+                newAvgScore = score;
+            } else {
+                animeCommentData = animeData.getComments();
+                newAvgScore = score + animeData.getAverageScore() / 2;
+            }
+
+            int currentEpisode = animeData.getCurrentEpisode();
+            animeCommentData.put(currentEpisode, new AnimeCommentData(Date.from(Instant.now()), score, comment));
+
+
+            // save comment and go back to the main menu
+            swingMainController.getDataLoader().save(
+                    new AnimeData(title, newAvgScore, animeData.getTotalEpisodeNumber(), currentEpisode + 1, animeCommentData)
+            );
+            swingMainController.switchMenu("MENU");
+
+        } catch (NumberFormatException e) {
+            swingMainController.showAlert("Please put an integer wich is in [0,5]");
+        } catch (UncompleteFieldException e) {
+            swingMainController.showAlert("Please complete comment field");
+        } catch (IOException e) {
+            swingMainController.showAlert("Failed to save data.");
         }
 
-        int currentEpisode = animeData.getCurrentEpisode();
-        animeCommentData.put(currentEpisode, new AnimeCommentData(Date.from(Instant.now()), score, comment));
-
-
-
-        // save comment and go back to the main menu
-        swingMainController.getDataLoader().save(
-                new AnimeData(title, newAvgScore, animeData.getTotalEpisodeNumber(), currentEpisode + 1, animeCommentData)
-        );
-        swingMainController.switchMenu("MENU");
-
-        //erase input fields
-        swingLogMenuView.eraseInputs();
     }
 }

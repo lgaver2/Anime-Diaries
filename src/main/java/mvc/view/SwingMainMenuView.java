@@ -2,8 +2,6 @@
 
 package mvc.view;
 
-import repository.AnimeData;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -120,6 +118,10 @@ public class SwingMainMenuView extends SwingMenuView {
     }
     public LinkedList<JButton> getViewButtons() {
         return this.viewButtons;
+    }
+    public void resetButtons() {
+        addButtons.removeAll(addButtons);
+        viewButtons.removeAll(viewButtons);
     }
 
 }

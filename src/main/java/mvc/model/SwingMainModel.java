@@ -5,6 +5,7 @@ import repository.AnimeData;
 import repository.DataLoader;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class SwingMainModel {
@@ -18,10 +19,9 @@ public class SwingMainModel {
         this.dataLoader = dataLoader;
         menuBarDict = new HashMap<>();
         menuControllers = new HashMap<>();
-        animeDatas = dataLoader.loadAllDatas();
     }
 
-    public void putMenuBar(String key, JMenuBar val){
+    public void putMenuBar(String key, JMenuBar val) {
         this.menuBarDict.put(key, val);
     }
 
@@ -31,6 +31,10 @@ public class SwingMainModel {
 
     public DataLoader getDataLoader() {
         return dataLoader;
+    }
+
+    public void loadAllDatas() throws IOException {
+        animeDatas = dataLoader.loadAllDatas();
     }
 
     public HashMap<String, AnimeData> getAnimeDatas() {
@@ -45,7 +49,7 @@ public class SwingMainModel {
         this.currentAnime = currentAnime;
     }
 
-    public void addMenuController(String menuName, SwingMenuController swingMenuController){
+    public void addMenuController(String menuName, SwingMenuController swingMenuController) {
         menuControllers.put(menuName, swingMenuController);
     }
 
@@ -53,7 +57,7 @@ public class SwingMainModel {
         return menuControllers.get(menuName);
     }
 
-   public void addAnimeData(String title, AnimeData animeData){
+    public void addAnimeData(String title, AnimeData animeData) {
         animeDatas.put(title, animeData);
-   }
+    }
 }

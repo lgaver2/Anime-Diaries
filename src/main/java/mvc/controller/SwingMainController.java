@@ -6,6 +6,7 @@ import repository.AnimeData;
 import repository.DataLoader;
 
 import javax.swing.*;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class SwingMainController {
@@ -16,23 +17,29 @@ public class SwingMainController {
         this.swingMainModel = swingMainModel;
         this.swingMainView = swingMainView;
 
-        SwingMainMenuView swingMainMenuView = new SwingMainMenuView();
-        SwingMainMenuModel swingMainMenuModel = new SwingMainMenuModel();
-        SwingMainMenuController swingMainMenuController = new SwingMainMenuController(swingMainMenuModel, swingMainMenuView, this);
+        try {
+            swingMainModel.loadAllDatas();
 
-        SwingLogMenuView swingLogMenuView = new SwingLogMenuView();
-        SwingLogMenuModel swingLogMenuModel = new SwingLogMenuModel();
-        SwingLogMenuController swingLogMenuController = new SwingLogMenuController(swingLogMenuModel, swingLogMenuView, this);
+            SwingMainMenuView swingMainMenuView = new SwingMainMenuView();
+            SwingMainMenuModel swingMainMenuModel = new SwingMainMenuModel();
+            SwingMainMenuController swingMainMenuController = new SwingMainMenuController(swingMainMenuModel, swingMainMenuView, this);
 
-        SwingViewMenuModel swingViewMenuModel = new SwingViewMenuModel();
-        SwingViewMenuView swingViewMenuView = new SwingViewMenuView();
-        SwingViewMenuController swingViewMenuController = new SwingViewMenuController(swingViewMenuModel, swingViewMenuView, this);
+            SwingLogMenuView swingLogMenuView = new SwingLogMenuView();
+            SwingLogMenuModel swingLogMenuModel = new SwingLogMenuModel();
+            SwingLogMenuController swingLogMenuController = new SwingLogMenuController(swingLogMenuModel, swingLogMenuView, this);
 
-        SwingAddMenuView swingAddMenuView = new SwingAddMenuView();
-        SwingAddMenuModel swingAddMenuModel = new SwingAddMenuModel();
-        SwingAddMenuController swingAddMenuController = new SwingAddMenuController(swingAddMenuModel, swingAddMenuView, this);
+            SwingViewMenuModel swingViewMenuModel = new SwingViewMenuModel();
+            SwingViewMenuView swingViewMenuView = new SwingViewMenuView();
+            SwingViewMenuController swingViewMenuController = new SwingViewMenuController(swingViewMenuModel, swingViewMenuView, this);
 
-        switchMenu("MENU");
+            SwingAddMenuView swingAddMenuView = new SwingAddMenuView();
+            SwingAddMenuModel swingAddMenuModel = new SwingAddMenuModel();
+            SwingAddMenuController swingAddMenuController = new SwingAddMenuController(swingAddMenuModel, swingAddMenuView, this);
+
+            switchMenu("MENU");
+        } catch (IOException e) {
+            swingMainView.showAlert("Failed to load anime datas. Do you have data directory with json files?");
+        }
     }
     public void addMenu(String menuName, SwingMenuController swingMenuController, JPanel panel, JMenuBar menuBar) {
         swingMainView.addCustomPanel(panel, menuName);
@@ -65,8 +72,16 @@ public class SwingMainController {
     }
 
     public void addAnimeData(String title, int totalEpisodes){
-        AnimeData newAnime = new AnimeData(title, 0, totalEpisodes, 1, null);
-        getDataLoader().save(newAnime);
-        swingMainModel.addAnimeData(title, newAnime);
+        try {
+            AnimeData newAnime = new AnimeData(title, 0, totalEpisodes, 1, null);
+            getDataLoader().save(newAnime);
+            swingMainModel.addAnimeData(title, newAnime);
+        } catch (IOException e) {
+            swingMainView.showAlert("Fail to save anime.");
+        }
+    }
+
+    public void showAlert(String alertMessage) {
+        swingMainView.showAlert(alertMessage);
     }
 }

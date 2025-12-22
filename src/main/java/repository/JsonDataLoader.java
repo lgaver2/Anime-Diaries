@@ -22,7 +22,7 @@ public class JsonDataLoader implements DataLoader{
     }
 
     @Override
-    public AnimeData load(String title) {
+    public AnimeData load(String title) throws IOException{
         ObjectMapper mapper = new ObjectMapper();
         AnimeData loadedData;
         try {
@@ -34,12 +34,12 @@ public class JsonDataLoader implements DataLoader{
 
         } catch (IOException e) {
             e.printStackTrace();
+            throw new IOException();
         }
-        return null;
     }
 
     @Override
-    public HashMap<String, AnimeData> loadAllDatas() {
+    public HashMap<String, AnimeData> loadAllDatas() throws IOException{
 
         HashMap<String, AnimeData> animeDatas = new HashMap<>();
         Path dir = Paths.get(StringUtils.removeEnd(pathPrefix, "/"));
@@ -55,12 +55,13 @@ public class JsonDataLoader implements DataLoader{
             }
         } catch (IOException e) {
             e.printStackTrace();
+            throw new IOException();
         }
             return animeDatas;
     }
 
     @Override
-    public void save(AnimeData animeData) {
+    public void save(AnimeData animeData) throws IOException{
         ObjectMapper mapper = new ObjectMapper();
         try {
             File file = new File(pathPrefix+animeData.getTitle()+"-diary.json");
@@ -74,6 +75,7 @@ public class JsonDataLoader implements DataLoader{
 
         } catch (IOException e) {
             e.printStackTrace();
+            throw new IOException();
         }
     }
 }
