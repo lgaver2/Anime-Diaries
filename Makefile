@@ -9,3 +9,8 @@ clean:
 .PHONY: test
 test:
 	mvn test
+
+.PHONY: doc
+doc:
+	mvn javadoc:javadoc
+	open target/site/apidocs/index.html
