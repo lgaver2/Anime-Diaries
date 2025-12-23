@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 package mvc.controller;
 
 import java.util.Map;

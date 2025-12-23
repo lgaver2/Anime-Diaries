@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 package mvc.view;
 
 import mvc.controller.SwingMenuController;

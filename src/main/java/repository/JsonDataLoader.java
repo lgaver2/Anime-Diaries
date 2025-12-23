@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 package repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 package mvc.controller;
 
 import mvc.model.*;

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import mvc.controller.SwingMainController;
 import mvc.controller.UncompleteFieldException;
