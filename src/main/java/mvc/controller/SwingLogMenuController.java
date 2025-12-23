@@ -28,11 +28,11 @@ public class SwingLogMenuController extends SwingMenuController {
 
         SwingLogMenuView swingLogMenuView = (SwingLogMenuView) swingMenuView;
         swingLogMenuView.getCommitItem().addActionListener(e -> {
-            storeEntry();
+            addCommentAction();
         });
 
         swingLogMenuView.getCommitButton().addActionListener(e -> {
-            storeEntry();
+            addCommentAction();
         });
 
         swingLogMenuView.getReturnItem().addActionListener(e -> {
@@ -64,26 +64,42 @@ public class SwingLogMenuController extends SwingMenuController {
         }
     }
 
+
     /**
-     * Method to store the comment and score of the user
+     * Add comment depending on the user input
      * show error box if not complete all fields or not an integer less than 5
      */
-    private void storeEntry() {
+    private void addCommentAction() {
         SwingLogMenuView swingLogMenuView = (SwingLogMenuView) swingMenuView;
-        SwingLogMenuModel swingLogMenuModel = (SwingLogMenuModel) swingMenuModel;
 
         try {
             // get user inputs with a test
             int score = Integer.parseInt(swingLogMenuView.getScore());
-            if (score <= 0 || 5 < score)
-                throw new NumberFormatException();
             String comment = swingLogMenuView.getComment();
+
+            addComment(score, comment);
+        } catch (NumberFormatException e) {
+            swingMainController.showAlert("Please put an integer wich is in [0,5]");
+        } catch (UncompleteFieldException e) {
+            swingMainController.showAlert("Please complete comment field");
+        } catch (IOException e) {
+            swingMainController.showAlert("Failed to save data.");
+        }
+    }
+
+    /**
+     * Method to store the comment and score of the user
+     * public to use in the test
+     */
+    public void addComment(int score, String comment) throws NumberFormatException, UncompleteFieldException, IOException {
+            if (score < 0 || 5 < score)
+                throw new NumberFormatException();
 
             if (comment.compareTo("") == 0)
                 throw new UncompleteFieldException();
 
-            // get the title of the anime wich the user is
-            // writing a comment
+            SwingLogMenuModel swingLogMenuModel = (SwingLogMenuModel) swingMenuModel;
+            // get the anime wich the user is writting a comment
             String title = swingLogMenuModel.getTitle();
             AnimeData animeData = swingLogMenuModel.getLoadedData();
 
@@ -109,14 +125,5 @@ public class SwingLogMenuController extends SwingMenuController {
                     new AnimeData(title, newAvgScore, animeData.getTotalEpisodeNumber(), currentEpisode + 1, animeCommentData)
             );
             swingMainController.switchMenu("MENU");
-
-        } catch (NumberFormatException e) {
-            swingMainController.showAlert("Please put an integer wich is in [0,5]");
-        } catch (UncompleteFieldException e) {
-            swingMainController.showAlert("Please complete comment field");
-        } catch (IOException e) {
-            swingMainController.showAlert("Failed to save data.");
-        }
-
     }
 }

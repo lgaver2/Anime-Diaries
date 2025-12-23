@@ -17,7 +17,7 @@ public class SwingAddMenuView extends SwingMenuView {
 
     public SwingAddMenuView() {
         super();
-
+        setName("AddScreen");
         JPanel innerPanel = new JPanel(new GridLayout(2, 2, 5, 10));
         innerPanel.setOpaque(false);
         innerPanel.setBorder(new EmptyBorder(0, 10, 0, 10));

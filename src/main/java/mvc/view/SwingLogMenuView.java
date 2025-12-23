@@ -17,6 +17,7 @@ public class SwingLogMenuView extends SwingMenuView {
 
     public SwingLogMenuView() {
         super();
+        setName("LogScreen");
         setBorder(new EmptyBorder(0,20,0,20));
 
         // create header

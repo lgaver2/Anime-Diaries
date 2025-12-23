@@ -16,6 +16,11 @@ import java.util.HashMap;
 public class SwingMainController {
     private SwingMainModel swingMainModel;
     private SwingMainView swingMainView;
+
+    private SwingMainMenuController swingMainMenuController;
+    private SwingLogMenuController swingLogMenuController;
+    private SwingAddMenuController swingAddMenuController;
+    private SwingViewMenuController swingViewMenuController;
     public SwingMainController(SwingMainModel swingMainModel, SwingMainView swingMainView){
 
         this.swingMainModel = swingMainModel;
@@ -26,19 +31,19 @@ public class SwingMainController {
 
             SwingMainMenuView swingMainMenuView = new SwingMainMenuView();
             SwingMainMenuModel swingMainMenuModel = new SwingMainMenuModel();
-            SwingMainMenuController swingMainMenuController = new SwingMainMenuController(swingMainMenuModel, swingMainMenuView, this);
+            swingMainMenuController = new SwingMainMenuController(swingMainMenuModel, swingMainMenuView, this);
 
             SwingLogMenuView swingLogMenuView = new SwingLogMenuView();
             SwingLogMenuModel swingLogMenuModel = new SwingLogMenuModel();
-            SwingLogMenuController swingLogMenuController = new SwingLogMenuController(swingLogMenuModel, swingLogMenuView, this);
+            swingLogMenuController = new SwingLogMenuController(swingLogMenuModel, swingLogMenuView, this);
 
             SwingViewMenuModel swingViewMenuModel = new SwingViewMenuModel();
             SwingViewMenuView swingViewMenuView = new SwingViewMenuView();
-            SwingViewMenuController swingViewMenuController = new SwingViewMenuController(swingViewMenuModel, swingViewMenuView, this);
+            swingViewMenuController = new SwingViewMenuController(swingViewMenuModel, swingViewMenuView, this);
 
             SwingAddMenuView swingAddMenuView = new SwingAddMenuView();
             SwingAddMenuModel swingAddMenuModel = new SwingAddMenuModel();
-            SwingAddMenuController swingAddMenuController = new SwingAddMenuController(swingAddMenuModel, swingAddMenuView, this);
+            swingAddMenuController = new SwingAddMenuController(swingAddMenuModel, swingAddMenuView, this);
 
             // start from the main menu
             switchMenu("MENU");
@@ -127,5 +132,21 @@ public class SwingMainController {
      */
     public void showAlert(String alertMessage) {
         swingMainView.showAlert(alertMessage);
+    }
+
+    public SwingMainMenuController getSwingMainMenuController() {
+        return swingMainMenuController;
+    }
+
+    public SwingLogMenuController getSwingLogMenuController() {
+        return swingLogMenuController;
+    }
+
+    public SwingAddMenuController getSwingAddMenuController() {
+        return swingAddMenuController;
+    }
+
+    public SwingViewMenuController getSwingViewMenuController() {
+        return swingViewMenuController;
     }
 }

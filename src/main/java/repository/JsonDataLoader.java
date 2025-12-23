@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
@@ -28,7 +29,7 @@ public class JsonDataLoader implements DataLoader{
     }
 
     @Override
-    public AnimeData load(String title) throws IOException{
+    public AnimeData load(String title) throws IOException, FileNotFoundException{
         ObjectMapper mapper = new ObjectMapper();
         AnimeData loadedData;
         try {
@@ -44,7 +45,7 @@ public class JsonDataLoader implements DataLoader{
     }
 
     @Override
-    public HashMap<String, AnimeData> loadAllDatas() throws IOException{
+    public HashMap<String, AnimeData> loadAllDatas() throws IOException, FileNotFoundException {
 
         HashMap<String, AnimeData> animeDatas = new HashMap<>();
         // remove the / because not compatible with the next loop
@@ -71,7 +72,7 @@ public class JsonDataLoader implements DataLoader{
     }
 
     @Override
-    public void save(AnimeData animeData) throws IOException{
+    public void save(AnimeData animeData) throws IOException, FileNotFoundException{
         ObjectMapper mapper = new ObjectMapper();
         try {
             File file = new File(pathPrefix+animeData.getTitle()+"-diary.json");

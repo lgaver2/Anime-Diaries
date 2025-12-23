@@ -42,16 +42,31 @@ public class SwingAddMenuController extends SwingMenuController {
     }
 
     /**
-     * Method use to add an anime in the list of the watching animes
-     * the anime will be saved in the MainController
+     * Method to get user input and try to add anime
      * if all fields are not complete or not an integer show error box
      */
     private void addAnimeAction() {
+        SwingAddMenuView swingAddMenuView = (SwingAddMenuView) swingMenuView;
         try {
-            SwingAddMenuView swingAddMenuView = (SwingAddMenuView) swingMenuView;
             // get user inputs
             String title = swingAddMenuView.getTitle();
             int totalEpisodes = Integer.parseInt(swingAddMenuView.getEpisodes());
+
+            addAnime(title, totalEpisodes);
+        } catch (NumberFormatException e) {
+            swingMainController.showAlert("Please put an non-negative integer");
+        } catch (UncompleteFieldException e){
+            swingMainController.showAlert("Please complete all fields");
+        }
+    }
+
+    /**
+     * Method use to add an anime in the list of the watching animes
+     * the anime will be saved in the MainController
+     * public to use in the test
+     */
+    public void addAnime(String title, int totalEpisodes) throws NumberFormatException, UncompleteFieldException{
+
             // number of episodes cannot be negative
             if (totalEpisodes <= 0)
                 throw new NumberFormatException();
@@ -62,11 +77,6 @@ public class SwingAddMenuController extends SwingMenuController {
             // if no problems save the data and go back to main menu
             swingMainController.storeAnimeData(title, totalEpisodes);
             swingMainController.switchMenu("MENU");
-        } catch (NumberFormatException e) {
-            swingMainController.showAlert("Please put an non-negative integer");
-        } catch (UncompleteFieldException e){
-            swingMainController.showAlert("Please complete all fields");
-        }
     }
 }
 

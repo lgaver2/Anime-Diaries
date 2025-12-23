@@ -33,13 +33,13 @@ public class SwingViewMenuController extends SwingMenuController {
         // load comments of the anime
         loadCommentDatas();
         // put on screen the loaded comments
-        addComments();
+        addContent();
     }
 
     /**
      * Method to put on screen the loaded comment by loadCommentDatas
      */
-    private void addComments() {
+    private void addContent() {
         SwingViewMenuView swingViewMenuView = (SwingViewMenuView) swingMenuView;
         SwingViewMenuModel swingViewMenuModel = (SwingViewMenuModel) swingMenuModel;
 

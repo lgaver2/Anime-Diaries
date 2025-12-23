@@ -18,6 +18,7 @@ public class SwingMainMenuView extends SwingMenuView {
     private JPanel contentPanel;
     public SwingMainMenuView() {
         super();
+        setName("MainScreen");
         JLabel foot = new JLabel("Main Menu");
         foot.setHorizontalAlignment(SwingConstants.CENTER);
         foot.setBackground(Color.LIGHT_GRAY);

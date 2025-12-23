@@ -15,6 +15,7 @@ public class SwingViewMenuView extends SwingMenuView {
     private JPanel contentPanel;
     public SwingViewMenuView() {
         super();
+        setName("ViewScreen");
         JLabel foot = new JLabel("View Mode");
         foot.setHorizontalAlignment(SwingConstants.CENTER);
         foot.setBackground(Color.LIGHT_GRAY);
