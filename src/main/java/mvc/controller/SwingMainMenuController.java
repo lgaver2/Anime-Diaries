@@ -44,16 +44,23 @@ public class SwingMainMenuController extends SwingMenuController {
     /**
      * Method call when switch form main menu to log menu
      * when user want to add a new comment
+     *
      * @param animeTitle the title wich user choose
      */
     private void switchLog(String animeTitle) {
-        swingMainController.setCurrentAnime(animeTitle);
-        swingMainController.switchMenu("LOG");
+        AnimeData animeData = swingMainController.getAnimeDatas().get(animeTitle);
+        if (animeData.getCurrentEpisode() > animeData.getTotalEpisodeNumber()) {
+            swingMainController.showAlert("You already watched all episodes!");
+        } else {
+            swingMainController.setCurrentAnime(animeTitle);
+            swingMainController.switchMenu("LOG");
+        }
     }
 
     /**
      * Method call when switch from main menu to view menu
      * when user want to see former comments
+     *
      * @param animeTitle the title wich user choose
      */
     private void switchView(String animeTitle) {
@@ -78,26 +85,30 @@ public class SwingMainMenuController extends SwingMenuController {
         for (Map.Entry<String, AnimeData> set : swingMainController.getAnimeDatas().entrySet()) {
             // get datas
             String title = set.getKey();
-            System.out.println(title);
-            float avgScore = set.getValue().getAverageScore();
-            int progress = (int) Math.floor((float) set.getValue().getCurrentEpisode() / set.getValue().getTotalEpisodeNumber() * 100);
+            try {
+                float avgScore = set.getValue().getAverageScore();
+                // the current episode can be greater than the total episode so take max at 100
+                int progress = (int) Math.max(100, Math.floor((float) set.getValue().getCurrentEpisode() / set.getValue().getTotalEpisodeNumber() * 100));
 
-            // create the row and store to the model to use in the second part of onMenuChange
-            JPanel row = swingMainMenuView.createRow(title, avgScore, progress);
-            swingMainMenuModel.getAnimeDatasPanels().add(row);
+                // create the row and store to the model to use in the second part of onMenuChange
+                JPanel row = swingMainMenuView.createRow(title, avgScore, progress);
+                swingMainMenuModel.getAnimeDatasPanels().add(row);
 
-            // set actions to buttons
-            swingMainMenuView.getAddButtons()
-                    .get(i)
-                    .addActionListener(e -> {
-                        switchLog(title);
-                    });
-            swingMainMenuView.getViewButtons()
-                    .get(i)
-                    .addActionListener(e -> {
-                        switchView(title);
-                    });
-            i++;
+                // set actions to buttons
+                swingMainMenuView.getAddButtons()
+                        .get(i)
+                        .addActionListener(e -> {
+                            switchLog(title);
+                        });
+                swingMainMenuView.getViewButtons()
+                        .get(i)
+                        .addActionListener(e -> {
+                            switchView(title);
+                        });
+                i++;
+            } catch (ArithmeticException e) {
+                swingMainController.showAlert("zero divion error, total episode is zero");
+            }
         }
     }
 }
