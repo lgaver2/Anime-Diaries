@@ -3,6 +3,7 @@ package mvc.controller;
 
 import mvc.model.*;
 import mvc.view.*;
+import repository.AnimeCommentData;
 import repository.AnimeData;
 import repository.DataLoader;
 
@@ -56,8 +57,8 @@ public class SwingMainController {
     /**
      * Method to add a custom menu into the view cardlayout
      * called by the constructor of each menu controllers
-     * @param menuName
-     * @param swingMenuController
+     * @param menuName the screen name
+     * @param swingMenuController the controller of the screen
      * @param panel the view of the menu
      * @param menuBar the custom menu bar of the menu view
      */
@@ -114,18 +115,22 @@ public class SwingMainController {
 
     /**
      * Method to save a new anime data into the storage
-     * @param title
-     * @param totalEpisodes
+     * @param title anime title
+     * @param avgScore the average score of the anime (default 0)
+     * @param totalEpisodes the total episodes for this anime
+     * @param currentEpisode the next episode the use will watch (default 1)
+     * @param commentDatas the list indexed by episodes of comment made by user (default null)
      */
-    public void storeAnimeData(String title, int totalEpisodes){
+    public void storeAnimeData(String title, float avgScore, int totalEpisodes, int currentEpisode, HashMap<Integer, AnimeCommentData> commentDatas){
         try {
-            AnimeData newAnime = new AnimeData(title, 0, totalEpisodes, 1, null);
+            AnimeData newAnime = new AnimeData(title, avgScore, totalEpisodes, currentEpisode, commentDatas);
             getDataLoader().save(newAnime);
             swingMainModel.addAnimeData(title, newAnime);
         } catch (IOException e) {
             swingMainView.showAlert("Fail to save anime.");
         }
     }
+
 
     /**
      * Method used to create an alert box on errors

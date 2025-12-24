@@ -93,38 +93,38 @@ public class SwingLogMenuController extends SwingMenuController {
      * public to use in the test
      */
     public void addComment(int score, String comment) throws NumberFormatException, UncompleteFieldException, IOException {
-            if (score < 0 || 5 < score)
-                throw new NumberFormatException();
+        if (score < 0 || 10 < score)
+            throw new NumberFormatException();
 
-            if (comment.compareTo("") == 0)
-                throw new UncompleteFieldException();
+        // empty text in the input field
+        if (comment.compareTo("") == 0)
+            throw new UncompleteFieldException();
 
-            SwingLogMenuModel swingLogMenuModel = (SwingLogMenuModel) swingMenuModel;
-            // get the anime wich the user is writting a comment
-            String title = swingLogMenuModel.getTitle();
-            AnimeData animeData = swingLogMenuModel.getLoadedData();
+        SwingLogMenuModel swingLogMenuModel = (SwingLogMenuModel) swingMenuModel;
+        // get the anime which the user is writing a comment
+        String title = swingLogMenuModel.getTitle();
+        AnimeData animeData = swingLogMenuModel.getLoadedData();
 
-            // add a new entry for comment if it is the first comment
-            HashMap<Integer, AnimeCommentData> animeCommentData;
-            float newAvgScore;
-            if (animeData.getComments() == null) {
-                animeCommentData = new HashMap<>();
-                newAvgScore = score;
-            } else {
-                animeCommentData = animeData.getComments();
-                newAvgScore = score + animeData.getAverageScore() / 2;
-            }
+        // add a new entry for comment if it is the first comment
+        HashMap<Integer, AnimeCommentData> animeCommentData;
+        float newAvgScore;
+        if (animeData.getComments() == null) {
+            animeCommentData = new HashMap<>();
+            newAvgScore = score;
+        } else {
+            animeCommentData = animeData.getComments();
+            float avgScore = animeData.getAverageScore();
+            newAvgScore = (score + avgScore) / 2;
+        }
 
-            int currentEpisode = animeData.getCurrentEpisode();
+        int currentEpisode = animeData.getCurrentEpisode();
 
-            // add directly to the anime hashset to not load all anime every times
-            animeCommentData.put(currentEpisode, new AnimeCommentData(Date.from(Instant.now()), score, comment));
+        // add directly to the anime hashset to not load all anime every times
+        animeCommentData.put(currentEpisode, new AnimeCommentData(Date.from(Instant.now()), score, comment));
 
 
-            // save comment and go back to the main menu
-            swingMainController.getDataLoader().save(
-                    new AnimeData(title, newAvgScore, animeData.getTotalEpisodeNumber(), currentEpisode + 1, animeCommentData)
-            );
-            swingMainController.switchMenu("MENU");
+        // save comment and go back to the main menu
+        swingMainController.storeAnimeData(title, newAvgScore, animeData.getTotalEpisodeNumber(), currentEpisode + 1, animeCommentData);
+        swingMainController.switchMenu("MENU");
     }
 }

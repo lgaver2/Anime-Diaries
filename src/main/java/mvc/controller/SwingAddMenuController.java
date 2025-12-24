@@ -76,7 +76,7 @@ public class SwingAddMenuController extends SwingMenuController {
                 throw new UncompleteFieldException();
 
             // if no problems save the data and go back to main menu
-            swingMainController.storeAnimeData(title, totalEpisodes);
+            swingMainController.storeAnimeData(title, 0, totalEpisodes, 1, null);
             swingMainController.switchMenu("MENU");
     }
 }
