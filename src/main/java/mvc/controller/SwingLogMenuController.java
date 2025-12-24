@@ -80,7 +80,7 @@ public class SwingLogMenuController extends SwingMenuController {
 
             addComment(score, comment);
         } catch (NumberFormatException e) {
-            swingMainController.showAlert("Please put an integer wich is in [0,5]");
+            swingMainController.showAlert("Please put an integer which is in [0,10]");
         } catch (UncompleteFieldException e) {
             swingMainController.showAlert("Please complete comment field");
         } catch (IOException e) {

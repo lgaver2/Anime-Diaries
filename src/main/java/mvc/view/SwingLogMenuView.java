@@ -34,7 +34,7 @@ public class SwingLogMenuView extends SwingMenuView {
         JPanel scorePanel = new JPanel(new BorderLayout());
         scorePanel.setOpaque(false);
         
-        JLabel scoreLabel = new JLabel("Your score (in 5 stars)");
+        JLabel scoreLabel = new JLabel("Your score (on 10)");
         scoreArea = new JTextArea(1, 20);
         scoreArea.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         
