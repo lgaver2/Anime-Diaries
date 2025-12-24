@@ -13,6 +13,7 @@ public class SwingLogMenuView extends SwingMenuView {
     private final JMenuItem returnItem;
     private final JButton commitButton;
     private final JLabel titleLabel;
+    private final JLabel commentLabel;
     private final JTextArea scoreArea;
     private final JTextArea commentArea;
 
@@ -47,7 +48,7 @@ public class SwingLogMenuView extends SwingMenuView {
         JPanel commentPanel = new JPanel(new BorderLayout());
         commentPanel.setOpaque(false);
         
-        JLabel commentLabel = new JLabel("Comment for this episode");
+        commentLabel = new JLabel("Comment for this episode");
         commentArea = new JTextArea();
         JScrollPane scroll = new JScrollPane(commentArea);
         commitButton = new JButton("Commit");
@@ -103,6 +104,14 @@ public class SwingLogMenuView extends SwingMenuView {
 
     public String getComment() {
         return commentArea.getText();
+    }
+
+    /**
+     * set some advice for writing
+     * @param helper the helper defined in the model
+     */
+    public void setCommentHelper(String helper) {
+        commentLabel.setText("Comment for this episode (help: "+ helper + ")");
     }
 
     /**

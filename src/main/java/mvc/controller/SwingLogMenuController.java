@@ -60,6 +60,9 @@ public class SwingLogMenuController extends SwingMenuController {
             int currentEpisode = swingLogMenuModel.getLoadedData().getCurrentEpisode();
             // set title + the current episode on the topbar of the screen
             swingLogMenuView.setTitleLabel(title + " ep:" + currentEpisode);
+
+            // set the comment helper
+            swingLogMenuView.setCommentHelper(swingLogMenuModel.getCommentHelper());
         } catch (IOException e) {
             swingMainController.showAlert("Failed to load datas.");
         }
@@ -83,8 +86,6 @@ public class SwingLogMenuController extends SwingMenuController {
             swingMainController.showAlert("Please put an integer which is in [0,10]");
         } catch (UncompleteFieldException e) {
             swingMainController.showAlert("Please complete comment field");
-        } catch (IOException e) {
-            swingMainController.showAlert("Failed to save data.");
         }
     }
 
@@ -92,7 +93,7 @@ public class SwingLogMenuController extends SwingMenuController {
      * Method to store the comment and score of the user
      * public to use in the test
      */
-    public void addComment(int score, String comment) throws NumberFormatException, UncompleteFieldException, IOException {
+    public void addComment(int score, String comment) throws NumberFormatException, UncompleteFieldException {
         if (score < 0 || 10 < score)
             throw new NumberFormatException();
 
