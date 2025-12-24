@@ -19,6 +19,7 @@ public class TestAddMenu {
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
+    // test if adding anime correct correctly
     @Test
     public void testAddingAnime() {
         Path path = temporaryFolder.getRoot().toPath();
@@ -38,7 +39,7 @@ public class TestAddMenu {
 
         // test if the datas are correct
         try {
-            AnimeData animeData = jsonDataLoader.load("Death note");
+            AnimeData animeData = swingMainController.getDataLoader().load("Death note");
             Assert.assertEquals("Death note", animeData.getTitle());
             Assert.assertEquals(37, animeData.getTotalEpisodeNumber());
             Assert.assertEquals(1, animeData.getCurrentEpisode());
@@ -48,6 +49,7 @@ public class TestAddMenu {
         }
     }
 
+    // test wrong input as empty anime title or wrong episode number
     @Test
     public void testWrongInput() {
         Path path = temporaryFolder.getRoot().toPath();
