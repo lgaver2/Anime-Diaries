@@ -1,5 +1,5 @@
 .PHONY: all
-all:
+all: dir
 	mvn clean compile exec:java -Dexec.mainClass=Main
 
 .PHONY: clean
@@ -14,3 +14,7 @@ test:
 doc:
 	mvn javadoc:javadoc
 	open target/site/apidocs/index.html
+
+.PHONY: dir
+dir:
+	mkdir -p data
