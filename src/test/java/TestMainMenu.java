@@ -22,7 +22,7 @@ public class TestMainMenu {
             swingMainController.storeAnimeData("Dragon Ball GT", 0, 0, 1, null);
             swingMainController.setCurrentAnime("Dragon Ball GT");
             // changeing to main screen
-            swingMainController.switchMenu("MAIN");
+            swingMainController.switchMenu("MENU");
 
         }
 }
