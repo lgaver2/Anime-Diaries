@@ -96,6 +96,15 @@ public class SwingMainModel {
     }
 
     /**
+     * Check if the menu name exist or not
+     * @param menuName the name of menu
+     * @return if the key exist
+     */
+    public boolean menuControllerContains(String menuName) {
+        return menuControllers.containsKey(menuName);
+    }
+
+    /**
      * use to add localy an anime and not load datas each times
      * @param title the title of the anime
      * @param animeData the datas for the anime

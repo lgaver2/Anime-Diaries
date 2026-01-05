@@ -9,6 +9,7 @@ import repository.DataLoader;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.rmi.UnexpectedException;
 import java.util.HashMap;
 
 /**
@@ -74,6 +75,11 @@ public class SwingMainController {
      * @param menuName the new screen name
      */
     public void switchMenu(String menuName){
+        if (!swingMainModel.menuControllerContains(menuName))
+        {
+            System.err.println(menuName + " Menu does not exist!");
+            System.exit(1);
+        }
         // for the view of the new screen
         swingMainView.showPanel(menuName);
         swingMainView.switchMenuBar(swingMainModel.getMenuBarVal(menuName));
